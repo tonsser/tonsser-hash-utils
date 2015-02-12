@@ -1,18 +1,18 @@
-# TonsserHashUtils
+# Tonsser Hash Utils
 
-TODO: Write a gem description
+A collection of classes for dealing with hashes
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'tonsser_hash_utils'
+gem "tonsser_hash_utils", "~> 1.0"
 ```
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
 Or install it yourself as:
 
