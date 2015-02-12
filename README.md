@@ -95,6 +95,8 @@ HashMerger.new(one).merge_with(two) # => {
                                     #    }
 ```
 
+**NOTE**: The merging is done using recursion, which might overflow the stack in Ruby due to the lack of tail call optimization. This shouldn't be a problem unless you have giant hashes, but be aware!
+
 ### HashBuilder
 
 `HashBuilder` is useful for building a hash that might contain deep nesting.
