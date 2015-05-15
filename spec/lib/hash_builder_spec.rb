@@ -16,7 +16,7 @@ describe HashBuilder do
     hash.foo = :foo
     hash.bar = :bar
 
-    expect(hash.as_json).to eq({"foo"=>"foo", "bar"=>"bar"})
+    expect(hash.as_json).to eq("foo" => "foo", "bar" => "bar")
   end
 
   it "allows easy creation of nested hashes" do
@@ -24,6 +24,8 @@ describe HashBuilder do
     hash.one.two.three.four = :foo
 
     expect(hash.one.two.three.four).to eq :foo
-    expect(hash.as_json).to eq({"one"=>{"two"=>{"three"=>{"four"=>"foo"}}}})
+    expect(hash.as_json).to eq(
+      "one" => { "two" => { "three" => { "four" => "foo" } } },
+    )
   end
 end

@@ -20,7 +20,7 @@ class HashMerger
   private
 
   def do_merge(hash, acc)
-    hash.inject(acc) do |acc, (key, value)|
+    hash.each_with_object(acc) do |(key, value), _acc|
       acc[key] = if value.is_a?(Hash)
                    do_merge(value, acc[key].dup || {})
                  elsif value.is_a?(Array)
@@ -28,8 +28,6 @@ class HashMerger
                  else
                    value
                  end
-
-      acc
     end
   end
 end

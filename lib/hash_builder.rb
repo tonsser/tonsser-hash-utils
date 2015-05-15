@@ -30,7 +30,9 @@ class HashBuilder
   end
 
   def method_missing(name, *args)
-    if match = name.to_s.match(/(?<key>.*?)=$/)
+    match = name.to_s.match(/(?<key>.*?)=$/)
+
+    if match.present?
       @hash[match[:key].to_sym] = args.first
     else
       @hash[name] = HashBuilder.new if @hash[name].blank?

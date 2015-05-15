@@ -14,11 +14,7 @@ class DeepHash
 
   def dig(*keys)
     keys.inject(@hash) do |location, key|
-      if location.nil?
-        nil
-      else
-        location[key]
-      end
+      location[key] unless location.nil?
     end
   end
 end

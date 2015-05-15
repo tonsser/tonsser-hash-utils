@@ -4,15 +4,15 @@ class HashWithQuickAccess
   end
 
   def method_missing(key)
-    if has_key(key)
+    if key?(key)
       fetch_possibly_decorated_value(key)
     else
-      raise KeyError.new("key :#{key} was not found")
+      fail KeyError, "key :#{key} was not found"
     end
   end
 
   def respond_to?(method_name, include_private = false)
-    has_key(method_name) || super
+    key?(method_name) || super
   end
 
   def keys
@@ -47,7 +47,7 @@ class HashWithQuickAccess
     end
   end
 
-  def has_key(key)
+  def key?(key)
     all_keys.include?(key)
   end
 
