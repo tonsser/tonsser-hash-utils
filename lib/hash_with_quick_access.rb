@@ -3,9 +3,11 @@ class HashWithQuickAccess
     @hash = hash
   end
 
-  def method_missing(key)
+  def method_missing(key, *args, &block)
     if key?(key)
       fetch_possibly_decorated_value(key)
+    elsif hash.respond_to?(key)
+      delegate_and_decorate(key, *args, &block)
     else
       fail KeyError, "key :#{key} was not found"
     end
@@ -16,7 +18,7 @@ class HashWithQuickAccess
   end
 
   def keys
-    @hash.keys.map(&:to_sym)
+    hash.keys.map(&:to_sym)
   end
 
   def [](key)
@@ -25,9 +27,19 @@ class HashWithQuickAccess
 
   private
 
-  def fetch_possibly_decorated_value(key)
-    obj = @hash.fetch(key) { @hash.fetch(key.to_s) }
+  attr_reader :hash
 
+  def delegate_and_decorate(method_name, *args, &block)
+    obj = hash.send(method_name, *args, &block)
+    possibly_decorate(obj)
+  end
+
+  def fetch_possibly_decorated_value(key)
+    obj = hash.fetch(key) { hash.fetch(key.to_s) }
+    possibly_decorate(obj)
+  end
+
+  def possibly_decorate(obj)
     if should_be_decorated(obj)
       decorate(obj)
     else
@@ -52,7 +64,7 @@ class HashWithQuickAccess
   end
 
   def all_keys
-    @hash.keys.flat_map do |key|
+    hash.keys.flat_map do |key|
       [key, key.to_sym]
     end
   end

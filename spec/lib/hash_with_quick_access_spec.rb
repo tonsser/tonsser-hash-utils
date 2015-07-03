@@ -1,4 +1,5 @@
 require "hash_with_quick_access"
+require "pp"
 
 describe HashWithQuickAccess do
   it "gives you quick access to hashes or arrays nested in other hashes" do
@@ -54,5 +55,25 @@ describe HashWithQuickAccess do
     hash = HashWithQuickAccess.new(job: { title: "Programmer" })
 
     expect(hash[:job][:title]).to eq "Programmer"
+  end
+
+  it "delegate methods to the hash" do
+    hash = HashWithQuickAccess.new(a: 1, b: 2)
+
+    expect(hash.map(&:last)).to eq [1, 2]
+  end
+
+  it "doesn't delegate if a key exists with the name" do
+    hash = HashWithQuickAccess.new(values: 1)
+
+    expect(hash.values).to eq 1
+  end
+
+  it "wraps delegated methods in HashWithQuickAccess if they're hashes" do
+    hash = HashWithQuickAccess.new(a: 1, b: 2)
+
+    derived_hash = hash.reduce(new: 1337) { |acc, (_, _)| acc }
+
+    expect(derived_hash.new).to eq 1337
   end
 end
