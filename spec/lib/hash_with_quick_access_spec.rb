@@ -76,4 +76,12 @@ describe HashWithQuickAccess do
 
     expect(derived_hash.new).to eq 1337
   end
+
+  it "adds accessed keys as instance methods" do
+    hash = HashWithQuickAccess.new(a: 1)
+
+    hash.a
+
+    expect(hash.methods - Object.new.methods).to include :a
+  end
 end

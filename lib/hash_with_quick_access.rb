@@ -4,13 +4,15 @@ class HashWithQuickAccess
   end
 
   def method_missing(key, *args, &block)
-    if key?(key)
-      fetch_possibly_decorated_value(key)
-    elsif hash.respond_to?(key)
-      delegate_and_decorate(key, *args, &block)
-    else
-      fail KeyError, "key :#{key} was not found"
-    end
+    value = if key?(key)
+              fetch_possibly_decorated_value(key)
+            elsif hash.respond_to?(key)
+              delegate_and_decorate(key, *args, &block)
+            else
+              fail KeyError, "key :#{key} was not found"
+            end
+    define_singleton_method(key) { value }
+    value
   end
 
   def respond_to?(method_name, include_private = false)
