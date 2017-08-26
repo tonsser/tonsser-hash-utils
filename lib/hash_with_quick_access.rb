@@ -1,4 +1,8 @@
 class HashWithQuickAccess
+  def self.add_convenience_method_to_hash!
+    Hash.send(:include, ConvenienceMethod)
+  end
+
   def initialize(hash)
     @hash = hash
   end
@@ -68,6 +72,12 @@ class HashWithQuickAccess
   def all_keys
     hash.keys.flat_map do |key|
       [key, key.to_sym]
+    end
+  end
+
+  module ConvenienceMethod
+    def with_quick_access
+      HashWithQuickAccess.new(self)
     end
   end
 end

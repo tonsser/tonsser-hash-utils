@@ -84,4 +84,12 @@ describe HashWithQuickAccess do
 
     expect(hash.methods - Object.new.methods).to include :a
   end
+
+  it "can monkey patch Hash with a convenience method" do
+    HashWithQuickAccess.add_convenience_method_to_hash!
+
+    hash = { a: 1 }.with_quick_access
+
+    expect(hash.a).to eq 1
+  end
 end
