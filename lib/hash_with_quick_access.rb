@@ -15,7 +15,11 @@ class HashWithQuickAccess
             else
               fail KeyError, "key :#{key} was not found"
             end
-    define_singleton_method(key) { value }
+
+    if !hash.respond_to?(key)
+      define_singleton_method(key) { value }
+    end
+
     value
   end
 

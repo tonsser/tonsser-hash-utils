@@ -85,6 +85,16 @@ describe HashWithQuickAccess do
     expect(hash.methods - Object.new.methods).to include :a
   end
 
+  it "doesn't memoize Hash methods" do
+    pp (Hash.new.methods - Object.new.methods).sort
+    raise
+
+    hash = HashWithQuickAccess.new(a: 1)
+
+    expect(hash.key?(:a)).to eq true
+    expect(hash.key?(:a)).to eq true
+  end
+
   it "can monkey patch Hash with a convenience method" do
     HashWithQuickAccess.add_convenience_method_to_hash!
 
