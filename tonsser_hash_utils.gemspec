@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "http://github.com/tonsser/tonsser_hash_utils"
   spec.license       = "MIT"
 
-  s.required_ruby_version = ">= 2.2.0"
+  spec.required_ruby_version = ">= 2.2.0"
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(/^bin/) { |f| File.basename(f) }
