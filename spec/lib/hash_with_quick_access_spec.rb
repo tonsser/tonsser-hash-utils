@@ -87,7 +87,6 @@ describe HashWithQuickAccess do
 
   it "doesn't memoize Hash methods" do
     pp (Hash.new.methods - Object.new.methods).sort
-    raise
 
     hash = HashWithQuickAccess.new(a: 1)
 
